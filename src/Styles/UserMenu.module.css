@@ -1,0 +1,14 @@
+.userDiv{
+    display: flex;
+    align-items: center;
+}
+
+p.userName{
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    margin-right: 15px;
+}
+
+div.avatar{
+    background-color: transparent;
+}

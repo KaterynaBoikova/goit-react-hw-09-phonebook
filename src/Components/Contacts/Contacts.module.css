@@ -1,0 +1,22 @@
+.contact{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.search{
+    display: block;
+    width: 75%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid rgb(228, 233, 240);
+    margin-bottom: 10px;
+}
+.delete{
+    border-radius: 5px;
+    border: 1px solid rgb(228, 233, 240);
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.delete:hover{
+    background: crimson;
+}

@@ -1,0 +1,21 @@
+.sectionHome{
+    background: linear-gradient(to right, rgba(47,48,58,0.4), rgba(47,48,58,0.4)),url(../Images/homeIMG.jpg),#2f303a;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    top: 0;
+    background-position: center;
+    z-index: -1;
+}
+.textMain{
+    color: white;
+    font-size: 45px;
+    padding-left: 10px;
+}
+.containerHome{
+    position: relative;
+    margin-top: 400px;
+}
