@@ -15,35 +15,29 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import styles from "../Styles/RegisterViewLoginView.module.css";
 
 export default function RegisterView() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [newUser, setNewUser] = useState({ email: "", password: "", name: "" });
 
   const dispatch = useDispatch();
 
-  const handleChangeEmail = (event) => {
-    setEmail(event.currentTarget.value);
-  };
-  const handleChangePassword = (event) => {
-    setPassword(event.currentTarget.value);
-  };
-  const handleChangeName = (event) => {
-    setName(event.currentTarget.value);
+  const handleChange = (event) => {
+    let name = event.currentTarget.name;
+    let value = event.currentTarget.value;
+    setNewUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(
       authOperations.userRegister({
-        name: name,
-        email: email,
-        password: password,
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
       })
     );
-
-    setPassword("");
-    setEmail("");
-    setName("");
+    setNewUser({ email: "", password: "", name: "" });
   };
 
   return (
@@ -74,8 +68,8 @@ export default function RegisterView() {
                   name="name"
                   pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                   title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-                  value={name}
-                  onChange={handleChangeName}
+                  value={newUser.name}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -87,8 +81,8 @@ export default function RegisterView() {
                   variant="outlined"
                   type="email"
                   name="email"
-                  value={email}
-                  onChange={handleChangeEmail}
+                  value={newUser.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,8 +94,8 @@ export default function RegisterView() {
                   variant="outlined"
                   type="password"
                   name="password"
-                  value={password}
-                  onChange={handleChangePassword}
+                  value={newUser.password}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>

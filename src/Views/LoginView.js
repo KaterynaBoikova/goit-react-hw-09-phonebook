@@ -15,22 +15,23 @@ import styles from "../Styles/RegisterViewLoginView.module.css";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 export default function LoginView() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
 
-  const handleChangeEmail = (event) => {
-    setEmail(event.currentTarget.value);
+  const handleChange = (event) => {
+    let name = event.currentTarget.name;
+    let value = event.currentTarget.value;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-  const handleChangePassword = (event) => {
-    setPassword(event.currentTarget.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(authOperations.userLogin({ email: email, password: password }));
-    setEmail("");
-    setPassword("");
+    dispatch(
+      authOperations.userLogin({ email: user.email, password: user.password })
+    );
+    setUser({ email: "", password: "" });
   };
 
   return (
@@ -59,8 +60,8 @@ export default function LoginView() {
                   variant="outlined"
                   type="email"
                   name="email"
-                  value={email}
-                  onChange={handleChangeEmail}
+                  value={user.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -72,8 +73,8 @@ export default function LoginView() {
                   variant="outlined"
                   type="password"
                   name="password"
-                  value={password}
-                  onChange={handleChangePassword}
+                  value={user.password}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>

@@ -5,29 +5,32 @@ import contactsSelectors from "../../Redux/Phonebook/contacts-selectors";
 import styles from "./ContactForm.module.css";
 
 export default function ContactForm() {
-  const [nameInput, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [contact, setContact] = useState({ name: "", number: "" });
   const contactsIn = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
-  const handleChangeName = (event) => {
-    setName(event.currentTarget.value);
-  };
-  const handleChangeNumber = (event) => {
-    setNumber(event.currentTarget.value);
+  const handleChange = (event) => {
+    let name = event.currentTarget.name;
+    let value = event.currentTarget.value;
+    setContact((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (contactsIn.find(({ name }) => name === nameInput)) {
-      alert(nameInput + " is already in contacts");
+    if (contactsIn.find(({ name }) => name === contact.name)) {
+      alert(contact.name + " is already in contacts");
       return;
     }
     dispatch(
-      contactsOperations.addContact({ name: nameInput, number: number })
+      contactsOperations.addContact({
+        name: contact.name,
+        number: contact.number,
+      })
     );
-    setName("");
-    setNumber("");
+    setContact({ name: "", number: "" });
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -40,8 +43,8 @@ export default function ContactForm() {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           required
-          value={nameInput}
-          onChange={handleChangeName}
+          value={contact.name}
+          onChange={handleChange}
         />
       </label>
       <label>
@@ -53,8 +56,8 @@ export default function ContactForm() {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
           required
-          value={number}
-          onChange={handleChangeNumber}
+          value={contact.number}
+          onChange={handleChange}
         />
       </label>
       <button className={styles.btnAdd} type="submit">
